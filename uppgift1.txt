@@ -23,4 +23,6 @@ Ck = 1/T int_0^T f(t)*e^(-jkw0t)dt =
 % Om k udda
 \frac{1}{-jk2\pi}(-2-1-1)= \frac{-4}{-jk2\pi} = \frac{2}{jk\pi} = \frac{-2j}{k\pi}
 
-
+2Ck = Ak - jBk (A, B \in \R)
+Ak = 0 eftersom Ck = 0 för jämna k => 2Ck = -jBk => Bk = -2Ck/j = -2j/kpi <=>
+Bk = 4/kpi
