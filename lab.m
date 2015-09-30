@@ -1,15 +1,14 @@
 %% Uppgift 1 a)
 
-T=1;
-w=2*pi/T;
-M=200;
-t=T*(0:M-1)/M;
-y=sin(w*t);
-plot(t,y)
-
-% Svar:
-%      An=1/T*(int(cos(w*n*x), x, 0, T/2) - int(cos(w*n*x), x, T/2, T));
-%      Bn=1/T*(int(sin(w*n*x), x, 0, T/2) - int(sin(w*n*x), x, T/2, T));
+% Finn fourierkoefficienterna Ak och Bk till fyrkantsvågen i Figur 3.
+%       1, 0<t<T/2
+% x(t)=
+%      -1, T/2<t<T
+%
+% 2Ck = Ak- jBk (Table 4.2, boken, s. 158) 
+% Ck = 1/T0 integral_T0 x(t)*e^(-jkw0t)dt
+% 
+% 
 
 %% Uppgift 1 b)
 clf
@@ -22,7 +21,7 @@ y=0;
 f=0;
 t=T*(0:M-1)/M;
 
-for n=1:10
+for n=1:100
     An=1/T*(int(cos(w*n*x), x, 0, T/2) - int(cos(w*n*x), x, T/2, T));
     Bn=1/T*(int(sin(w*n*x), x, 0, T/2) - int(sin(w*n*x), x, T/2, T));
     y=y + An*cos(n*w*t) + Bn*sin(n*w*t);
