@@ -1,0 +1,50 @@
+En fyrkantssignal enligt Figur 3 i lab-pm kan betecknas på följande vis:
+\[ 
+  x(t) =  
+    \begin{cases} 
+        1   &   \quad 0 < t < \frac{T}{2}\\ 
+        -1  &   \quad \frac{T}{2} < t < T\\ 
+    \end{cases} 
+\] 
+
+För att beräkna Fourierkoefficienterna för signalen använde vi oss av följande
+kända uttryck från kurslitteraturen:\\
+$2C_k = A_k - jB_k$ (A, B $\in$ $\mathbb{R}$) \\ %\emph{Table 4.2, s.158} \\
+$C_k = \frac{1}{T} \int_T x(t)e^{-jkw_{0}t}dt$
+
+Beräkningar följer nedan:
+$$ C_k = \frac{1}{T} \int_0^T x(t)e^{-jkw_{0}t}dt = 
+\frac{1}{T} \left(\int_0^{\frac{T}{2}} e^{-jkw_{0}t}dt - 
+\int_{\frac{T}{2}}^T e^{-jkw_{0}t} dt\right) =$$
+
+$$\frac{1}{T} \left(\left[\frac{e^{-jkw_{0}t}}{-jkw_{0}}\right]_0^{\frac{T}{2}} - 
+\left[\frac{e^{-jkw_{0}t}}{-jkw_{0}}\right]_{\frac{T}{2}}^T\right) = $$ 
+
+
+$$\frac{1}{T} \left(\frac{e^{\frac{-jkw_{0}T}{2}}}{-jkw_{0}} - 
+\frac{1}{-jkw_{0}} - \left(\frac{e^{-jkw_{0}T}}{-jkw_{0}} - 
+\frac{e^{\frac{-jkw_{0}T}{2}}}{-jkw_{0}}\right)\right) = $$
+
+
+$$\frac{2e^{\frac{-jkw_{0}T}{2}} - e^{-jkw_{0}T} - 1}{-jkw_{0}T} = $$
+
+
+$$\frac{1}{-jkw_{0}T}\left(2e^{\frac{-jkw_{0}T}{2}} - e^{-jkw_{0}T} - 1\right) =$$
+
+$$\frac{1}{-jkw_{0}T}\left(2cos\left(\frac{kw_{0}T}{2}\right) - 
+2jsin\left(\frac{kw_{0}T}{2}\right) - cos\left(kw_{0}T\right) +
+jsin\left(kw_{0}T\right) -1\right) =$$ 
+
+$$\frac{1}{-jk2\pi}(2cos(k\pi) - 2jsin(k\pi) - cos(k2\pi) + jsin(k2\pi)) =$$
+$$\begin{cases} 
+        \frac{1}{-jk2\pi}(2-1-1)= 0 &   \quad \text{Om k jämn.} \\ 
+        \frac{1}{-jk2\pi}(-2-1-1)= \frac{-2j}{k\pi} & \quad \text{Om k udda.}\\ 
+\end{cases} 
+$$ 
+% Om k udda 
+%\frac{1}{-jk2\pi}(-2-1-1)= \frac{-4}{-jk2\pi} = \frac{2}{jk\pi} = \frac{-2j}{k\pi} 
+
+$$2C_k = A_k - jB_k $$
+$$\text{Eftersom $C_k = 0$ för jämna k } \Rightarrow A_k = 0$$
+$$\Rightarrow 2C_k = -jB_k \Rightarrow B_k = -2C_k/j = -2j/k\pi \Leftrightarrow
+B_k = \frac{4}{k\pi}$$

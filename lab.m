@@ -1,28 +1,30 @@
-%% Uppgift 1 a)
+%% Uppgift 3.1 a)
 
 % An = 0
 % Bn = 4/(k*pi)
 % Se uppgift1.txt
-%% Uppgift 1 b)
+
+% Uppgift 3.1 b)
 clf
+clc
 syms n x k
 
 T=1;
 w=2*pi/T;
 M=200;
-y=0;
+x=0;
 f=0;
 t=T*(0:M-1)/M;
 
 for n=1:100
-    An = 0
-    Bn = 4*mod(n,2)/(n*pi) %mod(n,2) f�r att f� bort j�mna k
-    y = y + An*cos(n*w*t) + Bn*sin(n*w*t);
+    An = 0;
+    Bn = 4*mod(n,2)/(n*pi); %mod(n,2) för att få jämna k.
+    x = x + An*cos(n*w*t) + Bn*sin(n*w*t);
 end
-plot(t,y)
+plot(t,x)
 hold on
 
-%% Uppgift 2 a)
+%% Uppgift 3.2 a)
 clf
 clc
 
@@ -31,25 +33,21 @@ clc
 
 num = [1 10.1 1];
 den = [1 2 10 9];
-
 sys=tf(num, den);
-%bode(sys)
-%pzmap(sys)
-%grid on
 
-
-% Uppgift 2 b)
+% Uppgift 3.2 b)
 
 F=100;
-Tmax=2.^13;
-Ts=(2*pi)/F;
-t=0:Ts:Tmax*Ts;
+N=2.^13;
+Ts=1/F;
+Tmax = (N-1)*Ts;
+t=0:Ts:Tmax; 
 
 x1 = sin(t);
 x2 = sin(3*t);
 x3 = sin(5*t);
 
-% Uppgift 2 c)
+% Uppgift 3.2 c)
 
 % Amplitud
 y1 = lsim(sys,x1,t);
@@ -60,17 +58,10 @@ y1e = abs(evalfr(sys,1j))*x1;
 y2e = abs(evalfr(sys,3j))*x2;
 y3e = abs(evalfr(sys,5j))*x3;
 
-max(y1)
-% max(y1e)
-% max(y2)
-% max(y2e)
-% max(y3)
-% max(y3e)
-
 % Fas
 phi1 = angle(evalfr(sys,1j));
 x1p = sin(t-phi1);
-y1p = abs(evalfr(sys,1j))*x1p;
+y1p = lsim(sys,x1p,t);
 
 phi2 = angle(evalfr(sys,3j));
 x2p = sin(t-phi2);
@@ -80,43 +71,76 @@ phi3 = angle(evalfr(sys,5j));
 x3p = sin(t-phi3);
 y3p = lsim(sys,x3p,t);
 
-% Plot
-subplot(2,1,1)
-%plot(t, a1, 'r', t, a2, 'b');
-plot(t,y_1)
-hold on
-plot(t,y1a)
-axis([100 120 -5 5])
-subplot(2,1,2);
-plot(t, p, 'k');
-axis([0 10 0 10]);
+% Plots
 
+% a)
+% bode(sys)
+% pzmap(sys)
 
+% c)
+subplot(3,1,1)
+plot(t,y1, 'r', t, y1e, 'k', t, y1p, 'g')
+axis([0 30 -1 1.2])
 
-%% Uppgift 3 a)
+subplot(3,1,2)
+plot(t,y2, 'r', t, y2e, 'k', t, y2p, 'g')
+axis([0 30 -5 5])
+
+subplot(3,1,3)
+plot(t,y3, 'r', t, y3e, 'k', t, y3p, 'g')
+axis([0 30 -1.3 1.2])
+
+grid on
+%% Uppgift 3.3 a)
 clf
 clc
 
-t = -2*pi:0.01:2*pi;
-y = square(t);
-%plot(t,y, 'r', 'linewidth', 2)
+N = 2.^13;
+F = 100;
+Ts = 1/F;
+t = 0:Ts:40*pi; % Ändrade denna för att få en "hårdare plot". 
+                % Förändrar det något för våra Ck?
+x = square(t);
+% x(t) != x(-t) => x är udda
 
-% x(t)!=x(-t) => x �r udda
-
-% Uppgift 3 b)
-for n = 1:5
+% Uppgift 3.3 b)
+fprintf('Fourierkoefficienter enligt vår uträkning:\n\n')
+for n = 1:5;
     An = 0;
     Bn = 4*mod(n,2)/(n*pi);
-    if(Bn ~= 0)
+    if(Bn)
         disp(Bn)
     end
 end
 
-% Uppgift 3 c)
-Fs=100;
-k=0:1:2.^13-1;
-wk=(2*pi*Fs*k)/8192;
-ffy=fft(y, 8192);
-plot(wk, abs(ffy))
-hold on
-grid on
+% Uppgift 3.3 c)
+k = 0:(N-1);
+wk = (2*pi*F*k)/(N);
+ffx=fft(x, N);
+
+% Plots
+% subplot(2,1,1)
+% plot(t, x, 'r', 'linewidth', 1.5)
+% axis([-0 10 -1.5 1.5])
+% subplot(2,1,2)
+% plot(wk, abs(ffx))
+% axis([0 8 0 6000])
+% hold on
+% grid on
+
+% Uppgift 3.3 d)
+% Ekv 10: B = (2|X[k_0]|)/N
+
+B = (2*abs(ffx(k+1)))/N;
+Bs = sort(B, 'descend');
+fprintf('Fourierkoefficienter enligt fft:\n\n')
+disp(Bs(1))
+disp(Bs(3))
+disp(Bs(5))
+
+% Uppgift 3.3 e)
+num = [1 10.1 1];
+den = [1 2 10 9];
+h=tf(num, den);
+
+y = lsim(h,x,t);
