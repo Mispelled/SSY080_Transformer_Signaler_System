@@ -50,26 +50,29 @@ x3 = sin(5*t);
 % Uppgift 3.2 c)
 
 % Amplitud
+% Red
 y1 = lsim(sys,x1,t);
 y2 = lsim(sys,x2,t);
 y3 = lsim(sys,x3,t);
 
+% Black
 y1e = abs(evalfr(sys,1j))*x1;
 y2e = abs(evalfr(sys,3j))*x2;
 y3e = abs(evalfr(sys,5j))*x3;
 
 % Fas
+% Green
 phi1 = angle(evalfr(sys,1j));
-x1p = sin(t-phi1);
-y1p = lsim(sys,x1p,t);
+x1p = sin(t+phi1);
+y1p = abs(evalfr(sys,1j))*x1p;
 
 phi2 = angle(evalfr(sys,3j));
-x2p = sin(t-phi2);
-y2p = lsim(sys,x2p,t);
+x2p = sin(3*t+phi2);
+y2p = abs(evalfr(sys,3j))*x2p;
 
 phi3 = angle(evalfr(sys,5j));
-x3p = sin(t-phi3);
-y3p = lsim(sys,x3p,t);
+x3p = sin(5*t+phi3);
+y3p = abs(evalfr(sys,5j))*x3p;
 
 % Plots
 
@@ -79,15 +82,15 @@ y3p = lsim(sys,x3p,t);
 
 % c)
 subplot(3,1,1)
-plot(t,y1, 'r', t, y1e, 'k', t, y1p, 'g')
+plot(t,y1, ':r', t, y1e, 'k', t, y1p, '--b')
 axis([0 30 -1 1.2])
 
 subplot(3,1,2)
-plot(t,y2, 'r', t, y2e, 'k', t, y2p, 'g')
+plot(t,y2, ':r', t, y2e, 'k', t, y2p, '--b')
 axis([0 30 -5 5])
 
 subplot(3,1,3)
-plot(t,y3, 'r', t, y3e, 'k', t, y3p, 'g')
+plot(t,y3, ':r', t, y3e, 'k', t, y3p, '--b')
 axis([0 30 -1.3 1.2])
 
 grid on
@@ -118,25 +121,25 @@ k = 0:(N-1);
 wk = (2*pi*F*k)/(N);
 ffx=fft(x, N);
 
-% Plots
-% subplot(2,1,1)
-% plot(t, x, 'r', 'linewidth', 1.5)
-% axis([-0 10 -1.5 1.5])
-% subplot(2,1,2)
-% plot(wk, abs(ffx))
-% axis([0 8 0 6000])
-% hold on
-% grid on
+% % Plots
+%  subplot(2,1,1)
+%  plot(t, x, 'r', 'linewidth', 1.5)
+%  axis([-0 10 -1.5 1.5])
+%  subplot(2,1,2)
+%  plot(wk, abs(ffx))
+%  axis([0 7 0 6000])
+%  hold on
+%  grid on
 
 % Uppgift 3.3 d)
 % Ekv 10: B = (2|X[k_0]|)/N
 
-B = (2*abs(ffx(k+1)))/N;
-Bs = sort(B, 'descend');
-fprintf('Fourierkoefficienter enligt fft:\n\n')
-disp(Bs(1))
-disp(Bs(3))
-disp(Bs(5))
+% B = (2*abs(ffx(k+1)))/N;
+% Bs = sort(B, 'descend');
+% fprintf('Fourierkoefficienter enligt fft:\n\n')
+% disp(Bs(1))
+% disp(Bs(3))
+% disp(Bs(5))
 
 % Uppgift 3.3 e)
 num = [1 10.1 1];
@@ -144,3 +147,5 @@ den = [1 2 10 9];
 h=tf(num, den);
 
 y = lsim(h,x,t);
+roots(den)
+grid on
