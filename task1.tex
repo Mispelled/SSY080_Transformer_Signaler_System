@@ -1,4 +1,7 @@
+\section*{3.1 Fourierserie Uppbyggnad}
+\subsection*{a)}
 En fyrkantssignal enligt Figur 3 i lab-pm kan betecknas på följande vis:
+
 \[ 
   x(t) =  
     \begin{cases} 
@@ -48,3 +51,25 @@ $$2C_k = A_k - jB_k $$
 $$\text{Eftersom $C_k = 0$ för jämna k } \Rightarrow A_k = 0$$
 $$\Rightarrow 2C_k = -jB_k \Rightarrow B_k = -2C_k/j = -2j/k\pi \Leftrightarrow
 B_k = \frac{4}{k\pi}$$
+
+\subsection*{b)}
+Givet i labpm finns kod för att rita ut en sinusvåg. Genom att modifiera den
+koden kan vi genom våra erhållna Fourierkoefficienter rita upp en bättre och
+bättre approximation av en fyrkantsvåg. Koden för att beskriva
+fyrkantsvågsapproximationen finns nedan och figur~\ref{fig:task1b} visar vår 
+approximerade fyrkantsvåg efter summationsindex satt till 100.
+
+\begin{lstlisting}
+T=1;
+w=2*pi/T;
+M=200;
+x=0;
+t=T*(0:M-1)/M;
+
+for n=1:100
+    Ak = 0;
+    Bk = 4*mod(n,2)/(n*pi);
+    x = x + Ak*cos(n*w*t) + Bk*sin(n*w*t);
+end
+plot(t,x)
+\end{lstlisting}

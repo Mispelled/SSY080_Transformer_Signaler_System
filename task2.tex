@@ -1,0 +1,48 @@
+\section*{3.2 Linjära System och Sinusar}
+\subsection*{a)}
+Givet i labpm vinns ekvation 12 enligt: 
+$G(s) = \frac{(s+0.1)(s+10)}{(s+1)(s^2+s+9)} =
+\frac{s^2+10.1s+1}{s^3+2s^2+10s+9}$
+detta polynom kan tecknas som täljare och nämnare i Matlab - samt ovandlas till
+en överföringsfunktion - med följande kod:
+
+\begin{lstlisting}
+num = [1 10.1 1];
+den = [1 2 10 9];
+Gs=tf(num, den);
+\end{lstlisting}
+
+Bode-diagramet samt systemets pol- och nollställen kan ses i
+figur~\ref{fig:task2a-bode.png} och figur~\ref{fig:task2a-pzmap.png}.
+
+\subsection*{b)}
+De tre sinussignalerna ($x1 = sin(t), x2 = sin(3t), x3 = sin(5t)$) finns att
+beskåda i figur~\ref{fig:task2b}
+
+\subsection*{c)}
+Efter att ha låtit signalerna passera genom vårt givna system ($G(s)$) erhöll
+vi tre nya signaler ($y1, y2, y3$) vilka hade förändrad amplitud och fas
+gentemot får insignal. Detta var givetvis väntat. Den svarta kurvan visar
+insignalen och den blå visar signalen vilken returnerades av lsim. Vidare
+beräknade vi även amplitud och fas var och en för sig varefter vi lät den
+signalen gå genom systemet för att erhålla en signal lika med den som erhölls
+av lsim.
+
+Koden för att bekräfta ekv 2 kan ses nedan:
+
+\begin{lstlisting}
+phi1 = angle(evalfr(Gs,1j));
+x1p = sin(t+phi1);
+y1p = abs(evalfr(Gs,1j))*x1p;
+
+phi2 = angle(evalfr(Gs,3j));
+x2p = sin(3*t+phi2);
+y2p = abs(evalfr(Gs,3j))*x2p;
+
+phi3 = angle(evalfr(Gs,5j));
+x3p = sin(5*t+phi3);
+y3p = abs(evalfr(Gs,5j))*x3p;
+\end{lstlisting}
+
+Här kommer $y1p, y2p \text{ samt } y3p$ vara lika med $y1, y2 \text{ och } y3$
+vilka erhölls från lsim och vi ser alltså att ekv 2 stämmer.
