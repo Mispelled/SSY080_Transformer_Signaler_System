@@ -52,7 +52,7 @@ x3 = sin(5*t);
 % Amplitud
 % Red
 y1 = lsim(sys,x1,t);
-y2 = lsim(sys,x2,t);
+y2 = lsim(sys,x2,t);bode(H)
 y3 = lsim(sys,x3,t);
 
 % Black
@@ -122,6 +122,7 @@ end
 % Uppgift 3.3 c)
 k = 0:(N-1);
 wk = (2*pi*F*k)/(N);
+kf=@(wk) (N*wk)/(2*pi*F);
 ffx=fft(x, N);
 
 % % Plots
@@ -161,7 +162,6 @@ disp(abs(evalfr(H,5j))*4/(pi*5))
 % Enligt fft
 ffy = fft(y, N);
 B2 = (2*abs(ffy(k+1)))/N;
-kf=@(wk) (N*wk)/(2*pi*F);
 
 fprintf('Enligt fft:\n\n')
 B2max1 = max((B2(1:ceil(kf(2)))));
@@ -179,4 +179,48 @@ grid on
 subplot(2,1,2)
 plot(wk, abs(B2))
 axis([0 6 -0 1.5])
+grid on
+
+%% Uppgift 3.4 a)
+clc
+clf
+
+syms s;
+
+wc=3;
+Ts = s*(s-1j)*(s+1j)*(s-5j)*(s+5j)*(s-7j)*(s+7j)*(s-9j)*(s+9j);
+
+num = [1 0 156 0 7374 0 106444 0 99225 0];
+nroots = [0 -1j 1j -5j 5j -7j 7j -9j 9j];
+
+Tp = tf(num, 1);
+
+% Uppgift 3.4 b: n=10, c: n=11)
+Np = 1;
+for n = 1:11
+    Np = Np*(s+4*j);
+end
+
+den = sym2poly(Np);
+sys = tf(num,den);
+%bode(sys)
+
+
+% Uppgift 3.4 d)
+Hs=@(s) (s.^9 + 156*s.^7 + 7374*s.^5 + 106444*s.^3 + 99225*s)/(s.^11 + (0+44i)*s.^10 - 880*s.^9 + (-0-1.056e04i)*s.^8+84480*s.^7 + (0+4.731e05i)*s.^6- 1.892e06*s.^5 + (-0-5.407e06i)*s.^4 + 1.081e07*s.^3 + (0+1.442e07i)*s.^2- 1.153e07*s + (-0-4.194e06i));
+% Skalningsfaktor = 1/Hs(3j)
+snum = 1/Hs(3j)*num;
+sys2 = tf(snum, den);
+%bode(sys2)
+
+
+% Uppgift 3.4 e)
+F = 100;
+Ts = 1/F;
+t = 0:Ts:4*pi;
+x1 = square(t);
+y = lsim(sys2,x1,t);
+
+plot(t, y)
+
 grid on
