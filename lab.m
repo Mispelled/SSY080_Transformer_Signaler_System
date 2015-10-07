@@ -20,7 +20,6 @@ for n=1:100
     Bk = 4*mod(n,2)/(n*pi);
     x = x + Ak*cos(n*w*t) + Bk*sin(n*w*t);
 end
-
 plot(t,x)
 
 %% Uppgift 3.2 a)
@@ -46,6 +45,20 @@ t=0:Ts:Tmax;
 x1 = sin(t);
 x2 = sin(3*t);
 x3 = sin(5*t);
+
+% % Plots
+% subplot(3,1,1)
+% plot(t, x1)
+% legend('sin(t)')
+% axis([0 80 -1 1])
+% subplot(3,1,2)
+% plot(t, x2)
+% legend('sin(3t)')
+% axis([0 80 -1 1])
+% subplot(3,1,3)
+% plot(t, x3)
+% legend('sin(5t)')
+% axis([0 80 -1 1])
 
 % Uppgift 3.2 c)
 
@@ -77,21 +90,21 @@ y3p = abs(evalfr(Gs,5j))*x3p;
 % bode(sys)
 % pzmap(sys)
 
-% % c)
-% subplot(3,1,1)
-% plot(t,y1, '--b', t, y1p, ':r')
-% axis([0 30 -1 1.2])
-% legend('lsim', 'ekv 2'), title('w=1')
-% 
-% subplot(3,1,2)
-% plot(t,y2, '--b', t, y2p, ':r')
-% axis([0 30 -5 5])
-% legend('lsim', 'ekv 2'), title('w=3')
-% 
-% subplot(3,1,3)
-% plot(t,y3, '--b', t, y3p, ':r')
-% axis([0 30 -1.3 1.2])
-% legend('lsim', 'ekv 2'), title('w=5')
+% c)
+subplot(3,1,1)
+plot(t,y1,'--b', t,y1p,':r', t, x1,'k')
+axis([0 30 -1 1.2])
+legend('lsim1', 'ekv 2', 'x1'), title('w=1')
+
+subplot(3,1,2)
+plot(t,y2, '--b', t, y2p, ':r',t, x2,'k')
+axis([0 30 -5 5])
+legend('lsim2', 'ekv 2','x2'), title('w=3')
+
+subplot(3,1,3)
+plot(t,y3, '--b', t, y3p, ':r',t,x3,'k')
+axis([0 30 -1.3 1.2])
+legend('lsim3', 'ekv 2','x3'), title('w=5')
 
 %% Uppgift 3.3 a)
 clf
