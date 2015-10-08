@@ -200,22 +200,27 @@ Tp = tf(num, 1);
 
 % Uppgift 3.4 b: n=10, c: n=11)
 Np = 1;
-for n = 1:11
+for n = 1:12
     Np = Np*(s+4);
 end
 den = sym2poly(Np);
 sys = tf(num,den);
-%bode(sys);
+w={1,10000};
+%bode(sys, w);
+%grid on
 
 % Uppgift 3.4 d)
-Hs=@(s) (s.^9 + 156*s.^7 + 7374*s.^5 + 106444*s.^3 + 99225*s)/(s.^11 + (0+44i)*s.^10 - 880*s.^9 + (-0-1.056e04i)*s.^8+84480*s.^7 + (0+4.731e05i)*s.^6- 1.892e06*s.^5 + (-0-5.407e06i)*s.^4 + 1.081e07*s.^3 + (0+1.442e07i)*s.^2- 1.153e07*s + (-0-4.194e06i));
-% Skalningsfaktor = 1/Hs(3j)
-snum = 1/Hs(3j)*num;
-sys2 = tf(snum, den);
-% bode(sys2, 'r');
-% grid on
-% hold on
-% bode(sys, '--b');
+scale = abs(evalfr(sys, 3j));
+sys2 = tf(num/scale, den);
+abs(evalfr(sys2,3j));
+hej = mag2db(abs(evalfr(sys2, 1000j)));
+da = mag2db(abs(evalfr(sys2, 100j)));
+abs(hej-da)
+% Plots
+bode(sys2, w,'r');
+grid on
+hold on
+bode(sys, '--b');
 
 % Uppgift 3.4 e)
 N=8192;
@@ -230,17 +235,19 @@ x = square(t);
 yx = lsim(sys2,x,t);
 ffy = fft(yx, 8192);
 By = (2*abs(ffy(k+1)))/N;
+% % Plots
+% plot(t,yx)
+% axis([0 30 -15 15])
 % plot(wk, abs(By));
 % axis([0 9 0 20])
-% plot(t,y)
-% axis([0 30 -60 60])
 
-% Amplitud hos Notchfiltrets utsignal
-fprintf('Notch-amp square:')
-disp(max(yx))
-% Amplitud genom DTF och FFT
-fprintf('FFT-amp square:')
-disp(max(By))
+
+% % Amplitud hos Notchfiltrets utsignal
+% fprintf('Notch-amp square:')
+% disp(max(yx))
+% % Amplitud genom DTF och FFT
+% fprintf('FFT-amp square:')
+% disp(max(By))
 
 % ysignalen
 num = [1 10.1 1];
@@ -250,14 +257,15 @@ y = lsim(H,x,t);
 yy = lsim(sys2, y,t);
 ffy = fft(yy, 8192);
 By = (2*abs(ffy(k+1)))/N;
-% plot(t,y)
-% axis([0 30 -3 3])
+% % Plots
+% plot(t,yx)
+% axis([0 30 -15 15])
 % plot(wk, abs(By));
 % axis([0 9 0 60])
 
-% Amplitud hos Notchfiltrets utsignal
-fprintf('Notch-amp yy:')
-disp(max(yy))
-% Amplitud genom DTF och FFT
-fprintf('FFT-amp yy:')
-disp(max(By))
+% % Amplitud hos Notchfiltrets utsignal
+% fprintf('Notch-amp yy:')
+% disp(max(yy))
+% % Amplitud genom DTF och FFT
+% fprintf('FFT-amp yy:')
+% disp(max(By))
