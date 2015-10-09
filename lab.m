@@ -196,7 +196,9 @@ syms s;
 Ts = s*(s-1j)*(s+1j)*(s-5j)*(s+5j)*(s-7j)*(s+7j)*(s-9j)*(s+9j);
 num = [1 0 156 0 7374 0 106444 0 99225 0];
 Tp = tf(num, 1);
+% % Plots
 %bode(Tp);
+%grid on
 
 % Uppgift 3.4 b: n=10, c: n=11)
 Np = 1;
@@ -205,22 +207,20 @@ for n = 1:12
 end
 den = sym2poly(Np);
 sys = tf(num,den);
-w={1,10000};
-%bode(sys, w);
+w={1,5000};
+% % Plots
+%bode(sys,w);
 %grid on
 
 % Uppgift 3.4 d)
 scale = abs(evalfr(sys, 3j));
 sys2 = tf(num/scale, den);
 abs(evalfr(sys2,3j));
-hej = mag2db(abs(evalfr(sys2, 1000j)));
-da = mag2db(abs(evalfr(sys2, 100j)));
-abs(hej-da)
-% Plots
-bode(sys2, w,'r');
-grid on
-hold on
-bode(sys, '--b');
+% % Plots
+% bode(sys2, 'r');
+% grid on
+% hold on
+% bode(sys, '--b');
 
 % Uppgift 3.4 e)
 N=8192;
@@ -236,10 +236,11 @@ yx = lsim(sys2,x,t);
 ffy = fft(yx, 8192);
 By = (2*abs(ffy(k+1)))/N;
 % % Plots
-% plot(t,yx)
-% axis([0 30 -15 15])
+% plot(t,x, 'k', t, yx, 'b');
+% legend('x(t)', 'y(t)')
+% axis([0 30 -1.5 1.5])
 % plot(wk, abs(By));
-% axis([0 9 0 20])
+% axis([0 20 0 .5])
 
 
 % % Amplitud hos Notchfiltrets utsignal
@@ -258,10 +259,11 @@ yy = lsim(sys2, y,t);
 ffy = fft(yy, 8192);
 By = (2*abs(ffy(k+1)))/N;
 % % Plots
-% plot(t,yx)
-% axis([0 30 -15 15])
-% plot(wk, abs(By));
-% axis([0 9 0 60])
+% plot(t,y, 'k', t, yy);
+% legend('x(t)', 'y(t)')
+% axis([0 30 -3 3])
+plot(wk, abs(By));
+axis([0 20 0 1.5])
 
 % % Amplitud hos Notchfiltrets utsignal
 % fprintf('Notch-amp yy:')

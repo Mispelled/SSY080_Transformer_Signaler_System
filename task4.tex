@@ -9,17 +9,22 @@ systemet visas med hjälp av ett Bodediagram. Detta diagram finns att beskåda i
 figur~\ref{fig:task4a-bode}.
 
 \subsection*{b)}
-Efter att ha provat oss fram drog vi slutsatsen att 10 stycken poler sådana att
+Genom att studera bodediagramet drog vi slutsatsen att 10 stycken poler sådana att
 $p=-4$ var lämpliga för att dämpa höga frekvenser med systemet. Bodediagramet
 finns att se i figur~\ref{fig:task4b-bode}.
 
 \subsection*{c)}
-För att gå en dämpning på 60 dB för vinkelfrekvenser $\omega \gg 9
-\frac{\text{rad}}{s}$ erfodrades 11 poler.
+Genom att beräkna mag2db(abs(evalfr(sys,1000j))) -
+mag2db(abs(evalfr(sys,100j))) fann vi att 12 poler erofdrades för att en
+dämpning på 60 dB per dekad för vinkelfrekvenser $\omega \gg 9 
+\frac{\text{rad}}{s}$. Detta återspeglas även i vår slutliga uppritning av
+utsignalen då färre poler ger disskontinuiteter i signalen medan 12 poler ger
+en fin sinusformad kurva. Bodediagramet som visar detta finns att beskåda i
+figur~\ref{fig:task4c-bode}.
 
 \subsection*{d)}
 För att förstärka vårat system skalade vi täljarpolynomet med $|H(j3)|$.
-Filtrets frekvenssvar finns återgivet i figur~\ref{fig:task4d-bode}.
+Filtrets bodediagram finns återgivet i figur~\ref{fig:task4d-bode}.
 
 \subsection*{e)}
 Det finns massor med bilder längst ner!
