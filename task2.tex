@@ -1,6 +1,6 @@
 \section*{3.2 Linjära System och Sinusar}
 \subsection*{a)}
-Givet i labpm vinns ekvation 12 enligt: 
+Givet i labpm finns ekvation 12 enligt: 
 $G(s) = \frac{(s+0.1)(s+10)}{(s+1)(s^2+s+9)} =
 \frac{s^2+10.1s+1}{s^3+2s^2+10s+9}$
 detta polynom kan tecknas som täljare och nämnare i Matlab - samt ovandlas till
@@ -12,8 +12,19 @@ den = [1 2 10 9];
 Gs=tf(num, den);
 \end{lstlisting}
 
-Bode-diagramet samt systemets pol- och nollställen kan ses i
-figur~\ref{fig:task2a-bode} och figur~\ref{fig:task2a-pzmap}.
+Bodediagrammet samt systemets pol- och nollställen kan ses i
+figur~\ref{fig:task2a-bode} och figur~\ref{fig:task2a-pzmap}. I bodediagrammet 
+kan vi se hur systemet G(s) förändras med avseende på $s=j\omega$. Den övre
+delen av diagrammet visar $|G(s)|$ och den undre delen visar $arg\{G(s)\}$.
+Som vi kan se i den övre delen så dämpas amplituden ungefär för $\omega < 1
+\text{ och } 5 < \omega$. För $1 < \omega < 5$ ser vi dock att amplituden ökar. I
+den nedre delen av diagrammet ser vi att en markant fasförskjutning sker
+$\omega \simeq 3$.\\\\
+Som väntat finner vi, i det nedre diagrammet, kryss vilka markerar systemets
+nämnares nollställen (poler) och cirklar vilka markerar systemets täljares
+nollställen (noder). I det nedre diagrammet ser vi särskilt polerna vid
+$s=\alpha \pm j3$ vilka förtäljer att amplituden kommer nå sin kulmen vid
+$\omega = j3$ varefter amplituden sjunker med 20dB per dekad.
 
 \subsection*{b)}
 De tre sinussignalerna ($x1 = sin(t), x2 = sin(3t), x3 = sin(5t)$) finns att
@@ -22,11 +33,14 @@ beskåda i figur~\ref{fig:task2b}
 \subsection*{c)}
 Efter att ha låtit signalerna passera genom vårt givna system ($G(s)$) erhöll
 vi tre nya signaler ($y1, y2, y3$) vilka hade förändrad amplitud och fas
-gentemot vår insignal. Detta var givetvis väntat. Den svarta kurvan visar
+gentemot vår insignal. Detta var givetvis väntat. Den svarta kurvan i
+figur~\ref{fig:task2c-three-waves} visar
 insignalen och den blå visar signalen vilken returnerades av lsim. Vidare
 beräknade vi även amplitud och fas var och en för sig varefter vi lät den
 signalen gå genom systemet för att erhålla en signal lika med den som erhölls
 av lsim. Detta för att bekräfta ekvation 2 i labpm.
+
+\clearpage
 
 Koden för att bekräfta ekv 2 kan ses nedan:
 
@@ -44,5 +58,7 @@ x3p = sin(5*t+phi3);
 y3p = abs(evalfr(Gs,5j))*x3p;
 \end{lstlisting}
 
-Här kommer $y1p, y2p \text{ samt } y3p$ vara lika med $y1, y2 \text{ och } y3$
-vilka erhölls från lsim och vi ser alltså att ekv 2 stämmer.
+Här kommer signalerna $y1p, y2p \text{ samt } y3p$ vara lika med $lsim1, lsim2 
+\text{ och } lsim3$ vilka erhölls från lsim och vi ser alltså att ekv 2
+stämmer. Ekvation 2 lyder som bekant: $y(t) = |G(j\omega)|sin(\omega t +
+arg\{G(j\omega)\})$.

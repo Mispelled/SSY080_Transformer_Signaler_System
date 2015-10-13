@@ -5,13 +5,17 @@ $Ts = s*(s-1j)*(s+1j)*(s-5j)*(s+5j)*(s-7j)*(s+7j)*(s-9j)*(s+9j)$ där
 komplexkonjugerade nollställen används för att få ett polynom med reella
 koefficienter. Om man låter nämnaren vara lika med 1 och använder Matlabs
 inbyggda funktion för att generera en överföringsfunktion kan det resulterande
-systemet visas med hjälp av ett Bodediagram. Detta diagram finns att beskåda i
-figur~\ref{fig:task4a-bode}.
+systemet visas med hjälp av ett Bodediagramm. Detta diagramm finns att beskåda i
+figur~\ref{fig:task4a-bode}. Som väntat ligger det notchat i $\omega = 1, 5, 7,
+9$. Anledningen till att det är olämpligt att implementera ett filter med fler
+nollställen än poler är att vi då inte får den eftersträvansvärda dämpningen
+för alla frekvenser utan istället kommer förstärka vissa frekvenser.
 
 \subsection*{b)}
-Genom att studera bodediagramet drog vi slutsatsen att 10 stycken poler sådana att
-$p=-4$ var lämpliga för att dämpa höga frekvenser med systemet. Bodediagramet
-finns att se i figur~\ref{fig:task4b-bode}.
+Vi lade till lika många poler som vi har nollställen för att få en acceptabel
+dämpning. Bodediagrammet finns att se i figur~\ref{fig:task4b-bode}. $p=-4$ är
+ett bra val eftersom vi strävar efter att släppa igenom frekvenser vid
+$\omega = 3$ och dämpa de övriga, särskilt de högre, frekvenserna.
 
 \subsection*{c)}
 Genom att beräkna mag2db(abs(evalfr(sys,1000j))) -
@@ -19,12 +23,18 @@ mag2db(abs(evalfr(sys,100j))) fann vi att 12 poler erofdrades för att en
 dämpning på 60 dB per dekad för vinkelfrekvenser $\omega \gg 9 
 \frac{\text{rad}}{s}$. Detta återspeglas även i vår slutliga uppritning av
 utsignalen då färre poler ger disskontinuiteter i signalen medan 12 poler ger
-en fin sinusformad kurva. Bodediagramet som visar detta finns att beskåda i
+en fin sinusformad kurva. Bodediagrammet som visar detta finns att beskåda i
 figur~\ref{fig:task4c-bode}.
 
 \subsection*{d)}
 För att förstärka vårat system skalade vi täljarpolynomet med $|H(j3)|$.
-Filtrets bodediagram finns återgivet i figur~\ref{fig:task4d-bode}.
+Filtrets bodediagramm finns återgivet i figur~\ref{fig:task4d-bode}.
 
 \subsection*{e)}
-Det finns massor med bilder längst ner!
+I figur~\ref{fig:task4e-xsignal-sys2} och figur~\ref{fig:task4e-y-sys2}
+syns respektive insignal $x(t)$ i svart och utsignal $y(t)$ i blått. Man kan
+tydligt se att den stationära utsignalen liknar en sinus med frekvensen $\omega
+= 3$. Som brukligt kan vi även avläsa från graferna i
+figur~\ref{fig:task4e-fk-x-sys2} och figur~\ref{fig:task4e-fk-y-sys2} att
+amplituden är den förväntade vilket även stämmer överrens med tabellerna från
+uppgift 3.3 d respektive e.
