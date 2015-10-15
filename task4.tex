@@ -6,10 +6,11 @@ komplexkonjugerade nollställen används för att få ett polynom med reella
 koefficienter. Om man låter nämnaren vara lika med 1 och använder Matlabs
 inbyggda funktion för att generera en överföringsfunktion kan det resulterande
 systemet visas med hjälp av ett Bodediagramm. Detta diagramm finns att beskåda i
-figur~\ref{fig:task4a-bode}. Som väntat ligger det notchat i $\omega = 1, 5, 7,
+figur~\ref{fig:task4a-bode}. Som väntat ligger det notchar i $\omega = 1, 5, 7,
 9$. Anledningen till att det är olämpligt att implementera ett filter med fler
 nollställen än poler är att vi då inte får den eftersträvansvärda dämpningen
-för alla frekvenser utan istället kommer förstärka vissa frekvenser.
+för alla frekvenser utan istället kommer förstärka vissa frekvenser och
+feedbacken kommer ge en oändligt förstärkt signal.
 
 \subsection*{b)}
 Vi lade till lika många poler som vi har nollställen för att få en acceptabel
@@ -24,7 +25,11 @@ dämpning på 60 dB per dekad för vinkelfrekvenser $\omega \gg 9
 \frac{\text{rad}}{s}$. Detta återspeglas även i vår slutliga uppritning av
 utsignalen då färre poler ger disskontinuiteter i signalen medan 12 poler ger
 en fin sinusformad kurva. Bodediagrammet som visar detta finns att beskåda i
-figur~\ref{fig:task4c-bode}.
+figur~\ref{fig:task4c-bode}.\\\\
+För att filtret ska bli realiserbart krävs det att det finns minst lika många
+poler som det finns nollställen. Detta för att ge den eftersträvade dämpningen och inte
+råka ut för feedback som resulterar i en oändlig förstärkning. I vårt fall
+erfodras 10 stycken poler då vi har 10 stycken nollställen.
 
 \subsection*{d)}
 För att förstärka vårat system skalade vi täljarpolynomet med $|H(j3)|$.
